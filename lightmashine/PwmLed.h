@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "Led.h"
+#include "constants.h"
 
 class PwmLed: public Led {
   public:

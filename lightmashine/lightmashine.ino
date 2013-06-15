@@ -1,15 +1,9 @@
 // Version 1.5
 
-// Konstanten zur Verwendung in den Lichtprogrammen. Nicht veraendern!
-#define _ 0
-#define X 101
-#define PROGRAM_ENDE 201
-#define MODEL_WECHSEL 202
-#define FIN 203
-#define NICHT_DA 255
 
+#include "constants.h"
 #include <avr/pgmspace.h>
-#include "Alichtprogramme.h"
+#include "Lichtprogramme.h"
 
 /*
 ** Nachfolgend: Hard core stuff. Nicht anfassen!
