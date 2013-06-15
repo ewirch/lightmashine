@@ -4,6 +4,13 @@
 ** Grundeinstellungen
 */
 
+// gibt an ob der Arduino sofort mit dem ersten
+// Lichtprogramm loslegt, oder erst auf den
+// Einschaltbefehl wartet.
+// true - sofort loslegen
+// false - warten
+#define START_WITH_LIGHT_ON true
+
 // Anzahl der Pins, die am Arduino angesteuert werden sollen.
 // Davon haengt die Anzahl Werte ab, die man bei den Lichtprogrammen
 // in der horizontalen angegeben werden.
@@ -180,14 +187,6 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 // Hebel mindestens nach unten gehalten werden muss, damit der Arduino
 // das als Befehl zum Licht an/aus schalten betrachtet.
 #define ACTIVATE_PERIOD 500
-
-
-// gibt an ob der Arduino sofort mit dem ersten
-// Lichtprogramm loslegt, oder erst auf den
-// Einschaltbefehl wartet.
-// true - sofort loslegen
-// false - warten
-#define START_WITH_LIGHT_ON true
 
 // Verwendeter Funke-Umschalter.
 // 1 - fuer Umschalten per Hebel
