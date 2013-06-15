@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include "Led.h"
 
+#define NOT_SET 255
+
 class SimPwmLed: public Led {
   public:
     SimPwmLed(byte pin);
@@ -13,7 +15,15 @@ class SimPwmLed: public Led {
     void fastWrite(byte newState);
     
     byte _pin;
-    byte _targetLightness;
+    int _updatesBetweenFrames;
+    int _updatesPerTargetLightnessPoint;
+    int _updatesUntilNextTargetLightPoint;
+    bool _increasing;
+
+    byte _fromTargetLightness;
+    byte _toTargetLightness;
+
+    int _targetLightness;
     byte _counter;
     byte _state;
 };
