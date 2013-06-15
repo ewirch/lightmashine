@@ -27,17 +27,14 @@ byte led_pin_mapping[PIN_ANZAHL] =
 // e                         e     n  e                 e  n
 // r                         r        r                 r
  { 0, 1, 2, 3,      4, 5, 6, 7,    8, 9,10,         11,12,13,};
-//       ~  ~       ~  ~           ~                       ~
 
  
 // Licht-Programme
 prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 
+// Vorlagen zum kopieren:
 //  {  X,  X,  X,  X,      X,  X,  X,  X,       X,  X,  X,      X,  X,  X,},
 //  {  _,  _,  _,  _,      _,  _,  _,  _,       _,  _,  _,      _,  _,  _,},
-
- { 1, 1, 1, 1,    1, 1, 1, 1,      1, 1, 1,      1, 1, 1,},
- {  PROGRAM_ENDE},
  
  {  _,  _, 10, 50,     70, 30,  _,  _,      40,  _,  _,      _,  _, 40,},
  {  _,  _, 20, 60,     60, 40,  _,  _,      45,  _,  _,      _,  _, 45,},
@@ -172,14 +169,10 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 ** Erweiterte Einstellungen
 */
 
-// Liste der Pinnummern, die PWM unterst?tzten. Letztes Element MUSS 0xFF sein!
-// Vorkonfiguriert f?r Arudino UNO:
-byte pwmPins[] = {3, 5, 6, 9, 10, 11, 0xFF};
-
-// Der Pin, an dem der Empf?nger angeschlossen ist.
+// Der Pin, an dem der Empfaenger angeschlossen ist.
 #define SIG_PIN A0
 
-// Die Signalwerte, die der Empf?nger f?r mindest und maximal Wert ?bermittelt.
+// Die Signalwerte, die der Empfaenger fuer mindest und maximal Wert uebermittelt.
 #define RECIEVER_MIN 1078
 #define RECIEVER_MAX 1885
 
@@ -214,4 +207,4 @@ byte led_pin_mapping_4[PIN_ANZAHL] = { };
  
 byte led_pin_mapping_5[PIN_ANZAHL] = { };
 
- 
+

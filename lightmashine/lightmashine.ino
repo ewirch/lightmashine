@@ -1,4 +1,4 @@
-// Version 1.4
+// Version 1.5
 
 // Konstanten zur Verwendung in den Lichtprogrammen. Nicht veraendern!
 #define _ 0
@@ -36,7 +36,7 @@ long frameStarted = 0;
 int frame = -1;
 
 
-#define DEBUG_ON
+//#define DEBUG_ON
 #ifdef DEBUG_ON
 #define DEBUG_INIT   Serial.begin(115200);
 #define DEBUG(X)  Serial.println(X)
@@ -44,6 +44,10 @@ int frame = -1;
 #define DEBUG_INIT
 #define DEBUG(X)
 #endif
+
+/************************************************************************************
+*********************          Setup      *******************************************
+************************************************************************************/
 
 RecieverChannel *reciever = new RecieverChannel(SIG_PIN, RECIEVER_MIN, RECIEVER_MAX);
 FlagState *powerState;
@@ -78,69 +82,8 @@ void setup() {
   }
 }
 
-#define UPDATE_PERIOD 40
-long counter = 0;
-long lastTime = millis();
-int iterationsToMatchUpdatePeriod = 1000;
-int currentIterations = iterationsToMatchUpdatePeriod;
-long lastUpdate = millis();
-long globalNow = millis();
-void loop() {
- 
-  counter++;
-  currentIterations--;
-  if (currentIterations == 0) {
-    globalNow = millis();
-    currentIterations = iterationsToMatchUpdatePeriod;
 
-    if ((globalNow - lastTime) > 1000) {
-      lastTime = globalNow;
-      DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
-      //DEBUG(String(counter));
-      counter = 0;
-    }
 
-    long thisUpdateTook = globalNow - lastUpdate;
-    if (thisUpdateTook > UPDATE_PERIOD) {
-      iterationsToMatchUpdatePeriod-=100;
-      if (iterationsToMatchUpdatePeriod <= 0) iterationsToMatchUpdatePeriod = 100;
-    } else if (thisUpdateTook < UPDATE_PERIOD) {
-      iterationsToMatchUpdatePeriod+=100;
-    }
- 
-    lastUpdate = globalNow;
-
-    //reciever->read();
-    powerState->read();
-    lightProgramSelect->read();
-
-    if (powerState->hasChanged()) {
-      if (powerState->isOn()) {
-        activateLightMashine();
-      } else {
-        deactivateLightMashine();
-      }
-    }
-    
-    if (lightProgramSelect->hasChanged()) {
-      frame = programStarts[lightProgramSelect->getCount()];
-    }
-
-    if (powerState->isOn()) {
-      if (itIsTimeForNextFrame()) {
-        nextFrame();
-        copyFrameToLedState();
-      }
-    }
-  }
-  
-
-  if (powerState->isOn()) {
-    // update sw pwm leds
-    updateLeds();
-  }
-
-}
 
 void switchToSelectedModel() {
   byte model = 0;
@@ -190,6 +133,10 @@ void switchToSelectedModel() {
   modelStart = ledLine;
 }
 
+
+
+
+
 void setupLedState() {
   for (int i = 0; i < PIN_ANZAHL; i++) {
     int pinNr = led_pin_mapping[i];
@@ -200,8 +147,6 @@ void setupLedState() {
 #endif    
     ) {
       ledState[i] = new NoopLed(pinNr);
-    } else if (isPwmPin(pinNr)) {
-      ledState[i] = new SimPwmLed(pinNr);//new PwmLed(pinNr);
     } else {
       ledState[i] = new SimPwmLed(pinNr);
       DEBUG("sw pwm " + String(pinNr));
@@ -209,20 +154,7 @@ void setupLedState() {
   }
 }
 
-void updateLeds() {
-  for (int i = 0; i < PIN_ANZAHL; i++) {
-    ledState[i]->update();
-  }
-}
 
-bool isPwmPin(int pinNr) {
-  int i = 0;
-  while (pwmPins[i] != 0xFF) {
-    if (pwmPins[i] == pinNr) return true;
-    i++;
-  }
-  return false;
-}
 
 int setupProgramStarts() {
   // very first program
@@ -245,9 +177,104 @@ int setupProgramStarts() {
   return programCounter;
 }
 
+
+
 bool endOfProgramChain(byte ledValue) {
   return ledValue == FIN || ledValue == MODEL_WECHSEL;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define UPDATE_PERIOD 40
+long counter = 0;
+long lastTime = millis();
+int iterationsToMatchUpdatePeriod = 1000;
+int currentIterations = iterationsToMatchUpdatePeriod;
+long lastUpdate = millis();
+long globalNow = millis();
+void loop() {
+ 
+  counter++;
+  currentIterations--;
+  if (currentIterations == 0) {
+    globalNow = millis();
+    currentIterations = iterationsToMatchUpdatePeriod;
+
+    if ((globalNow - lastTime) > 1000) {
+      lastTime = globalNow;
+      DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
+      counter = 0;
+    }
+
+    long thisUpdateTook = globalNow - lastUpdate;
+    if (thisUpdateTook > UPDATE_PERIOD) {
+      iterationsToMatchUpdatePeriod-=100;
+      if (iterationsToMatchUpdatePeriod <= 0) iterationsToMatchUpdatePeriod = 100;
+    } else if (thisUpdateTook < UPDATE_PERIOD) {
+      iterationsToMatchUpdatePeriod+=100;
+    }
+ 
+    lastUpdate = globalNow;
+
+    //reciever->read();
+    powerState->read();
+    lightProgramSelect->read();
+
+    if (powerState->hasChanged()) {
+      if (powerState->isOn()) {
+        activateLightMashine();
+      } else {
+        deactivateLightMashine();
+      }
+    }
+    
+    if (lightProgramSelect->hasChanged()) {
+      frame = programStarts[lightProgramSelect->getCount()];
+    }
+
+    if (powerState->isOn()) {
+      if (itIsTimeForNextFrame()) {
+        nextFrame();
+        copyFrameToLedState();
+      }
+    }
+  }
+  
+
+  if (powerState->isOn()) {
+    // update sw pwm leds
+    updateLeds();
+  }
+
+}
+
+
+
+void updateLeds() {
+  for (int i = 0; i < PIN_ANZAHL; i++) {
+    ledState[i]->update();
+  }
+}
+
+
 
 void resetLedState() {
   // init ledState
@@ -257,11 +284,14 @@ void resetLedState() {
 }
 
 
+
 void activateLightMashine() {
   DEBUG("activate light mashine");
   lightProgramSelect->reset();
   frame = programStarts[lightProgramSelect->getCount()];
 }
+
+
 
 void deactivateLightMashine() {
   DEBUG("deactivate light mashine");
@@ -275,6 +305,8 @@ boolean itIsTimeForNextFrame() {
   return globalNow >= timeForNextFrame;
 }
 
+
+
 void nextFrame() {
   frame++;
   if (readLeds(frame,0) == PROGRAM_ENDE) {
@@ -283,14 +315,17 @@ void nextFrame() {
   frameStarted = globalNow;
 }
 
+
+
 void copyFrameToLedState() {
   for (int i = 0; i < PIN_ANZAHL; i++) {
     ledState[i]->set(readLeds(frame,i));
   }
 }
 
+
+
 byte readLeds(int lineNr, int rowNr) {
   return pgm_read_byte_near(&(leds[lineNr][rowNr]));
-//  return leds[lineNr][rowNr];
 }
 
