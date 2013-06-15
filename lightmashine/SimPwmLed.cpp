@@ -17,22 +17,38 @@ SimPwmLed::SimPwmLed(byte pin) {
 }
 
 void SimPwmLed::set(byte percent) {
+  bool immediate = false;
+  
+  if (percent == _) {
+    immediate = true;
+    percent = 0;
+  }
+  if (percent == X) {
+    immediate = true;
+    percent = 100;
+  }
   if (percent > 100) percent = 100;
 
-  _fromTargetLightness = _toTargetLightness;
-  _toTargetLightness = percent;
-
-  if (_updatesBetweenFrames > 0) {
-    int diff;
-    if (_toTargetLightness > _fromTargetLightness) {
-      diff = _toTargetLightness - _fromTargetLightness;
-      _increasing = true;
-    } else {
-      diff = _fromTargetLightness - _toTargetLightness;
-      _increasing = false;
+  if (immediate) {
+    _fromTargetLightness = percent;
+    _toTargetLightness = percent;
+    _updatesPerTargetLightnessPoint = _updatesBetweenFrames;
+  } else {
+    _fromTargetLightness = _toTargetLightness;
+    _toTargetLightness = percent;
+  
+    if (_updatesBetweenFrames > 0) {
+      int diff;
+      if (_toTargetLightness > _fromTargetLightness) {
+        diff = _toTargetLightness - _fromTargetLightness;
+        _increasing = true;
+      } else {
+        diff = _fromTargetLightness - _toTargetLightness;
+        _increasing = false;
+      }
+      if (diff == 0) {diff = 1;} // avoid division by zero
+      _updatesPerTargetLightnessPoint = _updatesBetweenFrames / diff;
     }
-    if (diff == 0) {diff = 1;} // avoid division by zero
-    _updatesPerTargetLightnessPoint = _updatesBetweenFrames / diff;
   }
 
   if (_fromTargetLightness == NOT_SET) {
