@@ -1,35 +1,52 @@
 #include "RecieverChannel.h"
+#include <HardwareSerial.h>
 
 RecieverChannel::RecieverChannel(int pin, int minSignal, int maxSignal) {
-	_pin = pin;
-	_maxSignal = maxSignal;
-	_minSignal = minSignal;
+  _pin = pin;
+  _maxSignal = maxSignal;
+  _minSignal = minSignal;
+  _lastState = LOW;
+  _stateChanged = micros();
 }
 
 void RecieverChannel::read() {
-	_value = pulseInSave();
+  int newState = digitalRead(_pin);
+  if (newState != _lastState) {
+    if (_lastState == LOW) {
+      // change from low to high, start measuring time
+      _stateChanged = micros();
+    }
+    if (_lastState == HIGH) {
+      // change from high to low, calculate passed time
+      long now = micros();
+      long time = now - _stateChanged;
+      if (time > MIN_VALUE) {
+        _value = trimValueToBoundaries(time);
+      }
+      _stateChanged = now;
+    }
+    _lastState = newState;
+  }
 }	
 
 int RecieverChannel::getValue() {
-	return _value;
+  return _value;
 }	
 
-int RecieverChannel::pulseInSave() {
-	int val = pulseIn(_pin, HIGH, 10000);
-	if (val == 0) return 0;
-	if (val < _minSignal) {
-		val = _minSignal;
-	}
-	if (val > _maxSignal) {
-		val = _maxSignal;
-	}
-	return val;
+int RecieverChannel::trimValueToBoundaries(long val) {
+  if (val < _minSignal) {
+    return _minSignal;
+  }
+  if (val > _maxSignal) {
+   return _maxSignal;
+  }
+  return val;
 }
 
 int RecieverChannel::getMaxSignal() {
-	return _maxSignal;
+  return _maxSignal;
 }
 
 int RecieverChannel::getMinSignal() {
-	return _minSignal;
+  return _minSignal;
 }

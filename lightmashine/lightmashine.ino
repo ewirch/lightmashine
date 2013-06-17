@@ -30,7 +30,7 @@ long frameStarted = 0;
 int frame = -1;
 
 
-//#define DEBUG_ON
+#define DEBUG_ON
 #ifdef DEBUG_ON
 #define DEBUG_INIT   Serial.begin(115200);
 #define DEBUG(X)  Serial.println(X)
@@ -143,7 +143,6 @@ void setupLedState() {
       ledState[i] = new NoopLed(pinNr);
     } else {
       ledState[i] = new SimPwmLed(pinNr);
-      DEBUG("sw pwm " + String(pinNr));
     }
   }
 }
@@ -194,10 +193,13 @@ bool endOfProgramChain(byte ledValue) {
 
 
 
+/************************************************************************************
+*********************          Loop      *******************************************
+************************************************************************************/
 
 
 
-#define UPDATE_PERIOD 40
+#define UPDATE_PERIOD 10
 long counter = 0;
 long lastTime = millis();
 int iterationsToMatchUpdatePeriod = 1000;
@@ -208,6 +210,7 @@ void loop() {
  
   counter++;
   currentIterations--;
+  reciever->read();
   if (currentIterations == 0) {
     globalNow = millis();
     currentIterations = iterationsToMatchUpdatePeriod;
@@ -228,7 +231,6 @@ void loop() {
  
     lastUpdate = globalNow;
 
-    //reciever->read();
     powerState->read();
     lightProgramSelect->read();
 
