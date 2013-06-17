@@ -1,5 +1,5 @@
 #include "Arduino.h"
- 
+
 /*
 ** Grundeinstellungen
 */
