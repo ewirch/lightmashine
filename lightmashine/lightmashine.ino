@@ -30,7 +30,7 @@ long frameStarted = 0;
 int frame = -1;
 
 
-#define DEBUG_ON
+//#define DEBUG_ON
 #ifdef DEBUG_ON
 #define DEBUG_INIT   Serial.begin(115200);
 #define DEBUG(X)  Serial.println(X)
@@ -158,7 +158,7 @@ int setupProgramStarts() {
   int i = modelStart;
   // all others
   while (!endOfProgramChain(readLeds(i,0))) {
-    if (leds[i][0] == PROGRAM_ENDE) {
+    if (readLeds(i,0) == PROGRAM_ENDE) {
       if (!endOfProgramChain(readLeds(i+1,0))) {
         programStarts[programCounter] = i+1;
         programCounter++;
@@ -207,7 +207,6 @@ int currentIterations = iterationsToMatchUpdatePeriod;
 long lastUpdate = millis();
 long globalNow = millis();
 void loop() {
- 
   counter++;
   currentIterations--;
   reciever->read();
@@ -217,7 +216,7 @@ void loop() {
 
     if ((globalNow - lastTime) > 1000) {
       lastTime = globalNow;
-      DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
+      //DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
       counter = 0;
     }
 
@@ -243,6 +242,7 @@ void loop() {
     }
     
     if (lightProgramSelect->hasChanged()) {
+      DEBUG("light program change " + String(lightProgramSelect->getCount()));
       frame = programStarts[lightProgramSelect->getCount()];
     }
 
@@ -259,7 +259,6 @@ void loop() {
     // update sw pwm leds
     updateLeds();
   }
-
 }
 
 

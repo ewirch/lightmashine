@@ -189,8 +189,8 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 
 byte modelSelectPins[] = {A1, A2};
 byte led_pin_mapping_2[PIN_ANZAHL] =
-// {12,10,11,     6, 9, 13,    2, 3, 4,         7, 5, 8,   NICHT_DA, NICHT_DA};
- {12,10,NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA,  NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA,   NICHT_DA, NICHT_DA};
+ {12,10,11,     6, 9, 13,    2, 3, 4,         7, 5, 8,   NICHT_DA, NICHT_DA};
+// {12,10,NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA,  NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA, NICHT_DA,   NICHT_DA, NICHT_DA};
 
 byte led_pin_mapping_3[PIN_ANZAHL] = { };
  
