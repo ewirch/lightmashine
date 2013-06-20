@@ -216,7 +216,7 @@ void loop() {
 
     if ((globalNow - lastTime) > 1000) {
       lastTime = globalNow;
-      //DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
+      DEBUG(String(counter) + " ips, " + String(iterationsToMatchUpdatePeriod) + " iterations per update, update period = " + String(globalNow - lastUpdate));
       counter = 0;
     }
 
@@ -259,9 +259,8 @@ void loop() {
     // update sw pwm leds
     updateLeds();
   }
+
 }
-
-
 
 void updateLeds() {
   for (int i = 0; i < PIN_ANZAHL; i++) {

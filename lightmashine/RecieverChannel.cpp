@@ -1,10 +1,10 @@
 #include "RecieverChannel.h"
-#include <HardwareSerial.h>
 
 RecieverChannel::RecieverChannel(int pin, int minSignal, int maxSignal) {
-  _pin = pin;
   _maxSignal = maxSignal;
   _minSignal = minSignal;
+  _pin = pin;
+  _value = 0;
   _lastState = LOW;
   _stateChanged = micros();
 }
