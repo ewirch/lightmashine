@@ -143,7 +143,6 @@ void setupLedState() {
       ledState[i] = new NoopLed(pinNr);
     } else {
       ledState[i] = new SimPwmLed(pinNr);
-      DEBUG("sw pwm " + String(pinNr));
     }
   }
 }
@@ -159,7 +158,7 @@ int setupProgramStarts() {
   int i = modelStart;
   // all others
   while (!endOfProgramChain(readLeds(i,0))) {
-    if (leds[i][0] == PROGRAM_ENDE) {
+    if (readLeds(i,0) == PROGRAM_ENDE) {
       if (!endOfProgramChain(readLeds(i+1,0))) {
         programStarts[programCounter] = i+1;
         programCounter++;
@@ -194,10 +193,13 @@ bool endOfProgramChain(byte ledValue) {
 
 
 
+/************************************************************************************
+*********************          Loop      *******************************************
+************************************************************************************/
 
 
 
-#define UPDATE_PERIOD 40
+#define UPDATE_PERIOD 10
 long counter = 0;
 long lastTime = millis();
 int iterationsToMatchUpdatePeriod = 1000;
@@ -205,9 +207,9 @@ int currentIterations = iterationsToMatchUpdatePeriod;
 long lastUpdate = millis();
 long globalNow = millis();
 void loop() {
- 
   counter++;
   currentIterations--;
+  reciever->read();
   if (currentIterations == 0) {
     globalNow = millis();
     currentIterations = iterationsToMatchUpdatePeriod;
@@ -228,7 +230,6 @@ void loop() {
  
     lastUpdate = globalNow;
 
-    //reciever->read();
     powerState->read();
     lightProgramSelect->read();
 
@@ -241,6 +242,7 @@ void loop() {
     }
     
     if (lightProgramSelect->hasChanged()) {
+      DEBUG("light program change " + String(lightProgramSelect->getCount()));
       frame = programStarts[lightProgramSelect->getCount()];
     }
 
@@ -259,8 +261,6 @@ void loop() {
   }
 
 }
-
-
 
 void updateLeds() {
   for (int i = 0; i < PIN_ANZAHL; i++) {

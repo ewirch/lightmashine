@@ -35,7 +35,7 @@ byte led_pin_mapping[PIN_ANZAHL] =
 // r                         r        r                 r
  { 0, 1, 2, 3,      4, 5, 6, 7,    8, 9,10,         11,12,13,};
 
- 
+
 // Licht-Programme
 prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 
@@ -96,7 +96,16 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
  {  _,  X,  X,  X,      _,  X,  _,  X,       _,  X,  X,      X,  _,  _,},
  {  PROGRAM_ENDE},
 
+
+
  { MODEL_WECHSEL },
+  
+ 
+/*
+** Modell 2, 6 LEDs vorne, 6 hinten
+*/
+
+ 
 /* normal on */
  {  _,  70, 40,     40, 70,  _,      _, 40, 40,     40, 40, _,},
  {  PROGRAM_ENDE},
@@ -147,11 +156,7 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
  
 
  {FIN}
- 
- 
-/*
-** Modell 2, 6 LEDs vorne, 6 hinten
-*/
+
 
 };
 
