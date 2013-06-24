@@ -173,9 +173,12 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 #define RECIEVER_MIN 1078
 #define RECIEVER_MAX 1885
 
-// Fuer Licht Aktivierung ueber Hebel. Anzahl an Millisekunden, die der
-// Hebel mindestens nach unten gehalten werden muss, damit der Arduino
-// das als Befehl zum Licht an/aus schalten betrachtet.
+// Zeitraum in Millisekunden. Dieser wird verwendet um festzulegen ab welcher Dauer und wie Lightmashine
+// den ueber Funke uebertragenen Befehl interpretiert.
+// Bei Hebel-Steuerung: Hebel muss laenger als dieser Wert in Position gehalten werden, damit 
+//                      Lightmashine das als Befehl erkennt.
+// Bei Knopf-Steuerung: Knopf laenger als dieser Wert gedrueckt: Licht an/aus. Knopf kuerzer als der Wert
+//                      gedrueckt: naechstes Lichtprogramm.
 #define ACTIVATE_PERIOD 500
 
 // Verwendeter Funke-Umschalter.
