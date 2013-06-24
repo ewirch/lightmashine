@@ -253,13 +253,8 @@ void loop() {
       }
     }
   }
-  
 
-  if (powerState->isOn()) {
-    // update sw pwm leds
-    updateLeds();
-  }
-
+   updateLeds();
 }
 
 void updateLeds() {

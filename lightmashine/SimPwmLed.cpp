@@ -14,6 +14,8 @@ SimPwmLed::SimPwmLed(byte pin) {
    _updatesPerTargetLightnessPoint = 0;
    _updatesUntilNextTargetLightPoint = 0;
    _targetLightness = 0;
+   _increasing = true;
+   _state = LOW;
 }
 
 void SimPwmLed::set(byte percent) {
