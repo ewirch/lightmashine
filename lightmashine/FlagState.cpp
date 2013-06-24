@@ -1,8 +1,9 @@
 #include "FlagState.h"
 
 FlagState::FlagState(State *stateSource, bool startState) {
-	_stateSource = stateSource;
-	_on = startState;
+  _stateSource = stateSource;
+  _on = startState;
+  _hasChanged = false;
 }
 
 void FlagState::read() {

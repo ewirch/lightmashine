@@ -1,4 +1,4 @@
-// Version 1.5
+// Version 1.5.1
 
 
 #include "constants.h"
@@ -253,13 +253,8 @@ void loop() {
       }
     }
   }
-  
 
-  if (powerState->isOn()) {
-    // update sw pwm leds
-    updateLeds();
-  }
-
+   updateLeds();
 }
 
 void updateLeds() {
