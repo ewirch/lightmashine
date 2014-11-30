@@ -6,6 +6,8 @@ RecieverChannel::RecieverChannel(int pin, int minSignal, int maxSignal) {
   _pin = pin;
   _value = 0;
   _lastState = LOW;
+  pinMode(pin, INPUT);
+
   _stateChanged = micros();
 }
 
