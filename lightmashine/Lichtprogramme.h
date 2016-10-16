@@ -37,7 +37,7 @@ byte led_pin_mapping[PIN_ANZAHL] =
 
 
 // Licht-Programme
-prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
+const byte leds[][PIN_ANZAHL] PROGMEM = {
 
 // Vorlagen zum kopieren:
 //  {  X,  X,  X,  X,      X,  X,  X,  X,       X,  X,  X,      X,  X,  X,},
@@ -186,16 +186,16 @@ prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
 // 2 - fuer Umschalten per Knopf
 #define SWITCH_TYPE 2
 
-byte modelSelectPins[] = {};
-byte led_pin_mapping_2[PIN_ANZAHL] = { };
+const byte modelSelectPins[] = {};
+const byte led_pin_mapping_2[PIN_ANZAHL] = { };
 
-byte led_pin_mapping_3[PIN_ANZAHL] = { };
+const byte led_pin_mapping_3[PIN_ANZAHL] = { };
  
  
-byte led_pin_mapping_4[PIN_ANZAHL] = { };
+const byte led_pin_mapping_4[PIN_ANZAHL] = { };
 
 
  
-byte led_pin_mapping_5[PIN_ANZAHL] = { };
+const byte led_pin_mapping_5[PIN_ANZAHL] = { };
 
 
