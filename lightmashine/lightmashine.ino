@@ -1,6 +1,3 @@
-// Version 1.5.1
-
-
 #include "constants.h"
 #include <avr/pgmspace.h>
 #include "Lichtprogramme.h"
