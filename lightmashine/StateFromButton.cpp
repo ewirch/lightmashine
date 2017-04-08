@@ -19,35 +19,34 @@ void StateFromButton::read() {
           // error during recieve. ignore value
           return;
         }
-        
-	bool newButtonPressed = value > _recieverMidValue;
-	if (!_buttonPressed && newButtonPressed) {
-            // button freshly pressed
-            _buttonPressedAt = millis();
-        } else {
-            // check if already returnes hasChanged
-            if (!_pressStateAlradyReturned) {
-              if (_operand == GRATER_THAN) {
-                  // don't wait until released
-                  if (_buttonPressed) {
-                    _buttonPressedFor = millis() - _buttonPressedAt;
-                    if (_buttonPressedFor >= _activatePeriod) {
-                      _hasChanged = true;
-                      _pressStateAlradyReturned = true;
-                    }
-                  }
-              }
-              if (_operand == LESS_THAN) {
-                if (_buttonPressed && !newButtonPressed) {
+
+    bool newButtonPressed = value > _recieverMidValue;
+    if (newButtonPressed && newButtonPressed != _buttonPressed) {
+        // button freshly pressed
+        _buttonPressedAt = millis();
+    } else {
+        // check if already returned hasChanged
+        if (!_pressStateAlradyReturned  && _buttonPressed) {
+            if (_operand == GRATER_THAN) {
+                // don't wait until released
+                _buttonPressedFor = millis() - _buttonPressedAt;
+                if (_buttonPressedFor >= _activatePeriod) {
+                    _hasChanged = true;
+                    _pressStateAlradyReturned = true;
+                    
+                }
+            }
+            if (_operand == LESS_THAN) {
+                if (!newButtonPressed) {
                     // button released
                     _buttonPressedFor = millis() - _buttonPressedAt;
                     if (_buttonPressedFor < _activatePeriod) {
-                      _hasChanged = true;
+                        _hasChanged = true;
                     }
                 }
-              }
             }
         }
+    }
         
 
   if (_buttonPressed != newButtonPressed) {
