@@ -15,15 +15,13 @@ void RecieverChannel::read() {
     if (_lastState == LOW) {
       // change from low to high, start measuring time
       _stateChanged = micros();
-    }
-    if (_lastState == HIGH) {
+    } else {
+      // _lastState == HIGH
       // change from high to low, calculate passed time
-      long now = micros();
-      long time = now - _stateChanged;
+      long time = micros() - _stateChanged;
       if (time > MIN_VALUE) {
         _value = trimValueToBoundaries(time);
       }
-      _stateChanged = now;
     }
     _lastState = newState;
   }
