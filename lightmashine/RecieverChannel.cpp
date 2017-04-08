@@ -9,6 +9,7 @@ RecieverChannel::RecieverChannel(int pin, int minSignal, int maxSignal) {
   pinMode(pin, INPUT);
 
   _stateChanged = micros();
+  _dropNextValue = false;
 }
 
 void RecieverChannel::read() {
@@ -24,14 +25,18 @@ void RecieverChannel::read() {
       if (time > MIN_VALUE) {
         _value = trimValueToBoundaries(time);
       }
+      if (_dropNextValue) {
+        _value = 0;
+        _dropNextValue = false;
+      }
     }
     _lastState = newState;
   }
-}	
+}
 
 int RecieverChannel::getValue() {
   return _value;
-}	
+}
 
 int RecieverChannel::trimValueToBoundaries(long val) {
   if (val < _minSignal) {
@@ -50,3 +55,9 @@ int RecieverChannel::getMaxSignal() {
 int RecieverChannel::getMinSignal() {
   return _minSignal;
 }
+
+void RecieverChannel::dropNextValue() {
+  _dropNextValue = true;
+}
+
+

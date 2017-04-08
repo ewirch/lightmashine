@@ -12,6 +12,7 @@ class RecieverChannel {
     int getValue();
     int getMaxSignal();
     int getMinSignal();
+    void dropNextValue();
   private:
     int _maxSignal;
     int _minSignal;
@@ -19,6 +20,7 @@ class RecieverChannel {
     int _value;
     long _stateChanged;
     int _lastState;
+    bool _dropNextValue;
     int trimValueToBoundaries(long val);
 };
 

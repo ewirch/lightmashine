@@ -249,6 +249,9 @@ void loop() {
         copyFrameToLedState();
       }
     }
+
+    // completed slow loop. measured received values are unrelieable.
+    reciever->dropNextValue();
   }
 
    updateLeds();
