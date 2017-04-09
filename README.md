@@ -401,6 +401,60 @@ Zeitraum in Millisekunden. Dieser wird verwendet um festzulegen ab welcher Dauer
 * **Bei Knopf-Steuerung**: Knopf länger als dieser Wert gedrückt: Licht an/aus. Knopf kürzer als der Wert gedrückt: nächstes Lichtprogramm.
 
 
-## TODO
-* Mehrere Modelle
+## Umstellung 1.3 nach 1.5
+
+### Lichtprogramme auslagern
+Die Lichprogramme sind in eine eigene Datei gewandert: `Lichtprogramme.h`. Nachdem Du die neue Version herunter geladen hast, öffne Deine alte `lightmashine.ino`, kopiere alle Deine Lichtprogramme:
+
+```
+byte leds[][PIN_ANZAHL] = {
+
+ {  _,  _, 50, 50,     30, 70,  _,  _,      60,  _,  _,      _,  _, 60,},
+ {  _,  _, 60, 40,     20, 60,  _,  _,      65,  _,  _,      _,  _, 65,},
+ {  _,  _, 70, 30,     10, 50,  _,  _,      70,  _,  _,      _,  _, 70,},
+ {  _,  _, 60, 20,     20, 40,  _,  _,      65,  _,  _,      _,  _, 65,},
+ {  E,  E,  E,  E,      E,  E,  E   E,       E,  E,  E,      E,  E,  E,},
+
+ {  _,  _, 30, 30,     30, 30,  _,  _,       X,  _,  X,      X,  _,  X,},
+ {  X,  _, 10, 10,     10, 10,  _,  X,       X,  X,  X,      X,  X,  X,},
+ {  X,  _,  _,  _,      _,  _,  _,  X,       X,  X,  X,      X,  X,  X,},
+ {  _,  _,  _,  _,      _,  _,  _,  _,       X,  _,  X,      X,  _,  X,},
+ {  E,  E,  E,  E,      E,  E,  E   E,       E,  E,  E,      E,  E,  E,},
+
+ {FIN,FIN,FIN,FIN,    FIN,FIN,FIN,FIN,     FIN,FIN,FIN,    FIN,FIN,FIN,},
+};
+```
+**Wichtig! Achte darauf, nicht die erste und die letzte Zeile zu kopieren. Nur Deine Licht-Programm-Zeilen!**
+Öffne die neue `Lichtprogramme.h` und lösche die Beispiel-Licht-Programme. Hier kannst Du nun Deine Licht-Programme einfügen. Übertrage auch die anderen Einstellungen, indem Du die Werte einen nach dem anderen übernimmst. Die Struktur der Datei ist leicht anders, daher kannst Du nicht einfach alle Zeilen kopieren.
+
+In Zukunft kannst Du bei neuen Releases einfach die `Lichtprogramme.h` durch Deine überschreiben.
+
+### Neues Program-Ende und Ende-Ende
+Die neue Struktur verwendet anstelle von `E` für Programm-Ende, das mehr lesbare `PROGRAM_ENDE`. Weiter muss das nicht mehr zig mal angegeben werden. Ein Mal reicht. Das selbe gilt für das Ende der Enden: `FIN`. Das Obere Beispiel sieht nach der Anpassung so aus:
+
+```
+prog_uchar leds[][PIN_ANZAHL] PROGMEM = {
+
+ {  _,  _, 50, 50,     30, 70,  _,  _,      60,  _,  _,      _,  _, 60,},
+ {  _,  _, 60, 40,     20, 60,  _,  _,      65,  _,  _,      _,  _, 65,},
+ {  _,  _, 70, 30,     10, 50,  _,  _,      70,  _,  _,      _,  _, 70,},
+ {  _,  _, 60, 20,     20, 40,  _,  _,      65,  _,  _,      _,  _, 65,},
+ { PROGRAM_ENDE },
+
+ {  _,  _, 30, 30,     30, 30,  _,  _,       X,  _,  X,      X,  _,  X,},
+ {  X,  _, 10, 10,     10, 10,  _,  X,       X,  X,  X,      X,  X,  X,},
+ {  X,  _,  _,  _,      _,  _,  _,  X,       X,  X,  X,      X,  X,  X,},
+ {  _,  _,  _,  _,      _,  _,  _,  _,       X,  _,  X,      X,  _,  X,},
+ { PROGRAM_ENDE },
+
+ {FIN},
+};
+```
+
+### pwmPins weg
+Die Einstellung
+```
+byte pwmPins[] = {3, 5, 6, 9, 10, 11, 0xFF};
+```
+Ist raus geflogen. Da sie aber nicht dokumentiert war, wird es eh niemand bemerken. ;)
 
