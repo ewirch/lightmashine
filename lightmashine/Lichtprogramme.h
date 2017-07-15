@@ -186,7 +186,7 @@ const byte leds[][PIN_ANZAHL] PROGMEM = {
 // 2 - fuer Umschalten per Knopf
 #define SWITCH_TYPE 2
 
-const byte modelSelectPins[] = {};
+const byte modelSelectPins[] = { NICHT_DA };
 const byte led_pin_mapping_2[PIN_ANZAHL] = { };
 
 const byte led_pin_mapping_3[PIN_ANZAHL] = { };
