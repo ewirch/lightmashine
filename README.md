@@ -373,12 +373,13 @@ Die Sanwa MT-4 hat zwei frei programmierbare Knöpfe. Der eine befindet sich dir
 
 Im Menü `System -> Key Assign -> Switch`, die Zeile mit SW2 auswählen, und für `Function` AUX1 auswählen. Für `MODE` den Wert `PUSH` auswählen. Dieser legt fest, dass die Funke nur so lange einen anderen Wert übermittelt, solange der Knopf gedrückt wird. Dann zurück ins Hauptmenü und das Menü `AUX1` auswählen. Den Knopf Sw2 drücken und gedrückt halten. Nun das Wählrad zum "auswählen" drücken und den Wert auf 100 stellen. Wählrad zum Bestätigen noch mal drücken. Sw2 loslassen. Nun müsste der Wert 0 angezeigt werden. Wenn Du Sw2 gedrückt hältst der Wert 100.
 
-### Steuerung per Knopf (an der Karo)
+## Steuerung per Knopf (an der Karo)
 Falls man keinen freien Kanal an der Funke hat, den man verwenden kann, kann man Lightmashine auch über einen Taster an der Karo steuern. `SWITCH_TYPE` wird dazu auf 3 gesetzt:
 ```
 #define SWITCH_TYPE 3
 ```
 Der Taster (Taste gedrückt: Kontakt geschlossen, Taste losgelassen: Kontakt offen) wird zwischen dem Pin, der durch `SIG_PIN` Beschrieben wurde und Masse (GND) geschaltet. Der Taster setzt somit den Pin `SIG_PIN` beim Betätigen auf LO.
+Wird der Taster kurz gedrückt, wird zum nächsten Lichtprogramm weiter geschaltet. Wird der Taster lange gedrückt gehalten, geht Lightmashine an/aus.
 
 
 ##Fehlersuche
