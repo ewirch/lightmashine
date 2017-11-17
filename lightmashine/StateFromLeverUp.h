@@ -1,6 +1,7 @@
 #ifndef __STATEFROLEVERUP_H__
 #define __STATEFROLEVERUP_H__
 
+#include "Arduino.h"
 #include "StateFromLever.h"
 
 

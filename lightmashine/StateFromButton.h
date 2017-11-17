@@ -2,6 +2,7 @@
 #define __STATEFROMBUTTON_H__
 #define RESULT_ALREADY_RETURNED 0
 
+#include "Arduino.h"
 #include "RecieverChannel.h"
 #include "State.h"
 
