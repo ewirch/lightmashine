@@ -2,10 +2,11 @@
 #define __RECIEVER_H__
 
 #include "Arduino.h"
+#include "Channel.h"
 
 #define MIN_VALUE 500
 
-class RecieverChannel {
+class RecieverChannel : public Channel {
   public:
     RecieverChannel(int pin, int minSignal, int maxSignal);	
     void read();

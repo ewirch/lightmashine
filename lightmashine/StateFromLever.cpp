@@ -1,6 +1,6 @@
 #include "StateFromLever.h"
 
-StateFromLever::StateFromLever(RecieverChannel *reciever, long activatePeriod) {
+StateFromLever::StateFromLever(Channel *reciever, long activatePeriod) {
 	_reciever = reciever;
 	_activatePeriod = activatePeriod;
 	_isOn = false;
@@ -15,7 +15,7 @@ void StateFromLever::read() {
           // error during recieve. ignore value
           return;
         }
-        
+
         boolean newIsOn = recieverValueToOnState(value);
 	if (newIsOn != _isOn) {
                 // button released

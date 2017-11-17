@@ -7,7 +7,7 @@
 
 class StateFromLeverUp: public StateFromLever {
 	public:
-		StateFromLeverUp(RecieverChannel *reciever, long activatePeriod);
+		StateFromLeverUp(Channel *reciever, long activatePeriod);
 		bool recieverValueToOnState(int value);
 	private:
 		int _upperEnableBorder;

@@ -1,6 +1,6 @@
 #include "StateFromLeverUp.h"
 
-StateFromLeverUp::StateFromLeverUp(RecieverChannel *reciever, long activatePeriod)
+StateFromLeverUp::StateFromLeverUp(Channel *reciever, long activatePeriod)
 :StateFromLever(reciever, activatePeriod)
  {
 	 int minSignal = reciever->getMinSignal();
