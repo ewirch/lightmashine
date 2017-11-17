@@ -6,6 +6,7 @@
 ** Nachfolgend: Hard core stuff. Nicht anfassen!
 */
 #include "RecieverChannel.h"
+#include "DigitalChannel.h"
 #include "StateFromLeverUp.h"
 #include "StateFromLeverDown.h"
 #include "FlagState.h"
@@ -40,7 +41,8 @@ int frame = -1;
 *********************          Setup      *******************************************
 ************************************************************************************/
 
-RecieverChannel *reciever = new RecieverChannel(SIG_PIN, RECIEVER_MIN, RECIEVER_MAX);
+Channel *reciever;
+
 FlagState *powerState;
 Counter *lightProgramSelect;
 
@@ -53,11 +55,17 @@ void setup() {
 
   State *programSelectStateSource;
   State *powerStateSource;
+  if (SWITCH_TYPE == 1 || SWITCH_TYPE == 2) {
+    reciever = new RecieverChannel(SIG_PIN, RECIEVER_MIN, RECIEVER_MAX);
+  }
+  if (SWITCH_TYPE == 3) {
+    reciever = new DigitalChannel(SIG_PIN);
+  }
   if (SWITCH_TYPE == 1) {
     programSelectStateSource = new StateFromLeverUp(reciever, ACTIVATE_PERIOD);
     powerStateSource = new StateFromLeverDown(reciever, ACTIVATE_PERIOD);
   }
-  if (SWITCH_TYPE == 2) {
+  if (SWITCH_TYPE == 2 || SWITCH_TYPE == 3) {
     programSelectStateSource = new StateFromButton(reciever, LESS_THAN, ACTIVATE_PERIOD);
     powerStateSource = new StateFromButton(reciever, GRATER_THAN, ACTIVATE_PERIOD);
   }

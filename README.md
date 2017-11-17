@@ -341,7 +341,7 @@ In beiden Fällen muss man Lightmashine den Pin mitteilen, an dem die Signalleit
 
 Nachfolgend beschreibe ich auch die Einstellung der Funke. Falls Deine Funke nicht aufgeführt ist und Du es erfolgreich zum Laufen gebracht hast, schick mir die Beschreibung, ich werde es übernehmen.
 
-### Steuerung per Hebel
+### Steuerung per Hebel (an der Funke)
 Wenn du einen freien Hebel an deiner Funke hast und diesen Verwenden möchtest, stelle die Einstellung `SWITCH_TYPE` (in `Lichtprogramme.h`) auf 1:
 ```
 #define SWITCH_TYPE 1
@@ -357,7 +357,7 @@ Wichtig ist, dass die Funke bei Betätigung des Hebels die Werte `-100% / 0% / 1
 #### Einstellung der Funke: Sanwa MT-4
 Die Sanwa MT-4 hat einen kleinen Hebel hinten. Dieser kann dazu verwendet werden. Ich gehe in der Beschreibung davon aus, dass Du am Empfänger den Kanal AUX1 gewählt hast. Unter `System -> Key Assign -> Lever`, den Wert `Function` auf den Kanal AUX1 stellen. Den Wert `TWEAK(H)` auf 100 stellen, den Wert `TWEAK(L)` auf -100. Dann zurück im Hauptmenü unter `AUX1`, sicherstellen, dass der Wert auf 0 steht.  Hebel in Mittelposition bringen. Dann Arduino einschalten. Falls der Hebel nicht in Mittelposition ist, wenn Du den Arduino einschaltest, dann liest Lightmashine den Hebelwert, als hättest Du den Hebel gerade in diese Position geschoben. War der Hebel also unten, dann wird Lightmashine aus gehen (oder an gehen, wenn es vorher aus war).
 
-### Steuerung per Knopf
+### Steuerung per Knopf (an der Funke)
 Hast Du einen frei programmierbaren Knopf an deiner Funke, kannst du diesen benutzen. Die Steuerung geht so:
 
 Knopf lange gerückt halten: **Licht an/aus**.
@@ -372,6 +372,13 @@ Stelle die Einstellung `SWITCH_TYPE` so ein:
 Die Sanwa MT-4 hat zwei frei programmierbare Knöpfe. Der eine befindet sich direkt über dem Daumen: Sw2. Und der andere unter dem Daumen, wenn man den Daumen nach oben hält: Sw1. Wähle einen. Ich beschreibe die Einstellung für Sw2 und Kanal AUX1. Für Sw1 ist das Vorgehen genau so.
 
 Im Menü `System -> Key Assign -> Switch`, die Zeile mit SW2 auswählen, und für `Function` AUX1 auswählen. Für `MODE` den Wert `PUSH` auswählen. Dieser legt fest, dass die Funke nur so lange einen anderen Wert übermittelt, solange der Knopf gedrückt wird. Dann zurück ins Hauptmenü und das Menü `AUX1` auswählen. Den Knopf Sw2 drücken und gedrückt halten. Nun das Wählrad zum "auswählen" drücken und den Wert auf 100 stellen. Wählrad zum Bestätigen noch mal drücken. Sw2 loslassen. Nun müsste der Wert 0 angezeigt werden. Wenn Du Sw2 gedrückt hältst der Wert 100.
+
+### Steuerung per Knopf (an der Karo)
+Falls man keinen freien Kanal an der Funke hat, den man verwenden kann, kann man Lightmashine auch über einen Taster an der Karo steuern. `SWITCH_TYPE` wird dazu auf 3 gesetzt:
+```
+#define SWITCH_TYPE 3
+```
+Der Taster (Taste gedrückt: Kontakt geschlossen, Taste losgelassen: Kontakt offen) wird zwischen dem Pin, der durch `SIG_PIN` Beschrieben wurde und Masse (GND) geschaltet. Der Taster setzt somit den Pin `SIG_PIN` beim Betätigen auf LO.
 
 
 ##Fehlersuche
