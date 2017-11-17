@@ -1,6 +1,7 @@
 #ifndef __STATEFROMLEVER_DOWN__
 #define __STATEFROMLEVER_DOWN__
 
+#include "Arduino.h"
 #include "RecieverChannel.h"
 #include "StateFromLever.h"
 
