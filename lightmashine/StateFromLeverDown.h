@@ -2,12 +2,12 @@
 #define __STATEFROMLEVER_DOWN__
 
 #include "Arduino.h"
-#include "RecieverChannel.h"
+#include "Channel.h"
 #include "StateFromLever.h"
 
 class StateFromLeverDown: public StateFromLever {
 	public:
-		StateFromLeverDown(RecieverChannel *reciever, long activatePeriod);
+		StateFromLeverDown(Channel *reciever, long activatePeriod);
 		bool recieverValueToOnState(int value);
 	private:
 		int _lowerEnableBorder;

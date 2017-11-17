@@ -3,7 +3,7 @@
 #define RESULT_ALREADY_RETURNED 0
 
 #include "Arduino.h"
-#include "RecieverChannel.h"
+#include "Channel.h"
 #include "State.h"
 
 enum Operand {
@@ -13,12 +13,12 @@ enum Operand {
 
 class StateFromButton: public State {
 	public:
-		StateFromButton(RecieverChannel *reciever, Operand operand, long period);
+		StateFromButton(Channel *reciever, Operand operand, long period);
 		void read();
 		bool hasChanged();
                 bool isOn();
  	private:
-		RecieverChannel *_reciever;
+		Channel *_reciever;
                 Operand _operand;
 		bool _buttonPressed;
 		long _buttonPressedAt;

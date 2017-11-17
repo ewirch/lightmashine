@@ -1,6 +1,6 @@
 #include "StateFromButton.h"
 
-StateFromButton::StateFromButton(RecieverChannel *reciever, Operand operand, long period) {
+StateFromButton::StateFromButton(Channel *reciever, Operand operand, long period) {
 	_reciever = reciever;
 	_activatePeriod = period;
 	_buttonPressed = false;
