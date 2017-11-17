@@ -382,7 +382,7 @@ Der Taster (Taste gedrückt: Kontakt geschlossen, Taste losgelassen: Kontakt off
 Wird der Taster kurz gedrückt, wird zum nächsten Lichtprogramm weiter geschaltet. Wird der Taster lange gedrückt gehalten, geht Lightmashine an/aus.
 
 
-##Fehlersuche
+## Fehlersuche
 ### error: too many initializers for 'int [X]'
 Die Pin-Anzahl, die bei PIN_ANZAHL angegeben wurde, stimmt nicht mit der Anzahl Spalten von `led_pin_mapping` und `leds` (Licht-Programme) überein.
 
